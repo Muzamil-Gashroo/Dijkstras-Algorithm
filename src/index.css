@@ -1,0 +1,193 @@
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 220 20% 7%;
+    --foreground: 210 20% 95%;
+
+    --card: 220 18% 10%;
+    --card-foreground: 210 20% 95%;
+
+    --popover: 220 18% 10%;
+    --popover-foreground: 210 20% 95%;
+
+    --primary: 185 70% 50%;
+    --primary-foreground: 220 20% 7%;
+
+    --secondary: 220 15% 15%;
+    --secondary-foreground: 210 20% 85%;
+
+    --muted: 220 15% 18%;
+    --muted-foreground: 215 15% 55%;
+
+    --accent: 185 70% 50%;
+    --accent-foreground: 220 20% 7%;
+
+    --destructive: 0 70% 55%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 220 15% 20%;
+    --input: 220 15% 15%;
+    --ring: 185 70% 50%;
+
+    --radius: 0.75rem;
+
+    /* Custom colors for algorithm states */
+    --node-unvisited: 220 15% 25%;
+    --node-visiting: 45 95% 55%;
+    --node-visited: 145 60% 45%;
+    --node-path: 185 70% 50%;
+    --node-start: 280 65% 60%;
+    --node-end: 340 75% 55%;
+
+    --edge-default: 220 15% 30%;
+    --edge-path: 185 70% 50%;
+    --edge-visiting: 45 95% 55%;
+
+    /* Glow effects */
+    --glow-primary: 0 0 20px hsl(185 70% 50% / 0.4);
+    --glow-visiting: 0 0 25px hsl(45 95% 55% / 0.5);
+    --glow-path: 0 0 30px hsl(185 70% 50% / 0.6);
+  }
+
+  .dark {
+    --background: 220 20% 7%;
+    --foreground: 210 20% 95%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'Inter', system-ui, sans-serif;
+  }
+
+  .font-mono {
+    font-family: 'JetBrains Mono', monospace;
+  }
+}
+
+@layer components {
+  .graph-node {
+    @apply transition-all duration-300 ease-out;
+  }
+
+  .graph-node-unvisited {
+    fill: hsl(var(--node-unvisited));
+  }
+
+  .graph-node-visiting {
+    fill: hsl(var(--node-visiting));
+    filter: drop-shadow(var(--glow-visiting));
+    animation: pulse-visiting 1s ease-in-out infinite;
+  }
+
+  .graph-node-visited {
+    fill: hsl(var(--node-visited));
+  }
+
+  .graph-node-path {
+    fill: hsl(var(--node-path));
+    filter: drop-shadow(var(--glow-path));
+  }
+
+  .graph-node-start {
+    fill: hsl(var(--node-start));
+    filter: drop-shadow(0 0 15px hsl(280 65% 60% / 0.5));
+  }
+
+  .graph-node-end {
+    fill: hsl(var(--node-end));
+    filter: drop-shadow(0 0 15px hsl(340 75% 55% / 0.5));
+  }
+
+  .graph-edge {
+    @apply transition-all duration-300 ease-out;
+    stroke: hsl(var(--edge-default));
+  }
+
+  .graph-edge-visiting {
+    stroke: hsl(var(--edge-visiting));
+    filter: drop-shadow(0 0 8px hsl(45 95% 55% / 0.5));
+  }
+
+  .graph-edge-path {
+    stroke: hsl(var(--node-path));
+    filter: drop-shadow(0 0 10px hsl(185 70% 50% / 0.5));
+  }
+
+  .glass-panel {
+    @apply bg-card/80 backdrop-blur-xl border border-border/50 rounded-xl;
+  }
+
+  .control-button {
+    @apply px-4 py-2.5 rounded-lg font-medium transition-all duration-200;
+  }
+
+  .control-button-primary {
+    @apply bg-primary text-primary-foreground hover:bg-primary/90 shadow-lg shadow-primary/20;
+  }
+
+  .control-button-secondary {
+    @apply bg-secondary text-secondary-foreground hover:bg-secondary/80;
+  }
+
+  .info-badge {
+    @apply px-3 py-1.5 rounded-full text-xs font-mono font-medium;
+  }
+}
+
+@layer utilities {
+  @keyframes pulse-visiting {
+    0%, 100% {
+      transform: scale(1);
+      opacity: 1;
+    }
+    50% {
+      transform: scale(1.05);
+      opacity: 0.9;
+    }
+  }
+
+  @keyframes fade-in-up {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes slide-in-right {
+    from {
+      opacity: 0;
+      transform: translateX(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  .animate-fade-in-up {
+    animation: fade-in-up 0.4s ease-out forwards;
+  }
+
+  .animate-slide-in-right {
+    animation: slide-in-right 0.3s ease-out forwards;
+  }
+
+  .delay-100 { animation-delay: 100ms; }
+  .delay-200 { animation-delay: 200ms; }
+  .delay-300 { animation-delay: 300ms; }
+}
